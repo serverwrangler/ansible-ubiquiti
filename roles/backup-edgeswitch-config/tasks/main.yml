@@ -1,0 +1,21 @@
+- name: Collect all facts from the device
+  community.network.edgeswitch_facts:
+    gather_subset: all
+
+- name: Backup switch (EdgeOS) to ~/edgeswitch-backups
+  community.network.edgeos_config:
+    backup: yes
+    backup_options:
+      dir_path: ~/edgeswitch-backups/ 
+  register: backup_edgeos_location
+  
+- name: Create backup repository in /tmp/backups
+  file:
+    path: "/tmp/backups/{{ inventory_hostname }}"
+    state: directory
+    recurse: yes
+
+- name: Copy backup files into /tmp/backups/<switchname>/<filename>.bck
+  copy:
+    src: "{{ backup_edgeos_location.backup_path }}"
+    dest: "/tmp/backups/{{ inventory_hostname }}/{{ inventory_hostname }}.bck"

@@ -1,0 +1,28 @@
+---
+- name: Backup EdgeSwitch Configurations from Datacenter(s)
+  hosts: all
+  connection: network_cli
+
+  collections:
+    - community.network
+
+  tasks:
+    - name: Collect all facts from the device
+      community.network.edgeswitch_facts:
+        gather_subset: all
+
+    - name: Backup switch (EdgeOS)
+      community.network.edgeos_config:
+        backup: yes
+      register: backup_edgeos_location
+  
+    - name: Create backup dir
+      file:
+        path: "/tmp/backups/{{ inventory_hostname }}"
+        state: directory
+        recurse: yes
+
+    - name: Copy backup files into /tmp/backups/ (EdgeOS)
+      copy:
+        src: "{{ backup_edgeos_location.backup_path }}"
+        dest: "/tmp/backups/{{ inventory_hostname }}/{{ inventory_hostname }}.bck"

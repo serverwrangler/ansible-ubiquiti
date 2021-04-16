@@ -1,0 +1,25 @@
+[dc1:vars]
+#host_key_checking=False
+ansible_become=yes
+ansible_become_method=enable
+ansible_user=admin
+ansible_password=PasswordHere
+ansible_become_pass=EnablePasswordHere
+ansible_network_os=community.network.edgeswitch
+
+[dc2:vars]
+#host_key_checking=False
+ansible_become=yes
+ansible_become_method=enable
+ansible_user=admin
+ansible_password=PasswordHere
+ansible_become_pass=EnablePasswordHere
+ansible_network_os=community.network.edgeswitch
+
+
+[dc1]
+dc1-edgesw253  ansible_host=192.168.0.253
+dc1-edgesw246  ansible_host=192.168.0.246
+
+[dc2]
+dc2-edgesw251  ansible_host=192.168.0.251

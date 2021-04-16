@@ -1,0 +1,11 @@
+---
+- name: EdgeSwitch Plays
+  hosts: all
+  connection: network_cli
+
+  collections:
+    - community.network
+
+  roles:
+    - backup-edgeswitch-config
+

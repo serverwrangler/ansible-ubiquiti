@@ -1,0 +1,6 @@
+---
+- name: Backup EdgeSwitch Configurations from Datacenter(s)
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
